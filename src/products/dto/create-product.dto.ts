@@ -15,8 +15,8 @@ export class CreateProductDto {
   name: string;
 
   @IsNumber()
-  amount: string;
+  amount: number;
 
   @IsNumber()
-  price: string;
+  price: number;
 }

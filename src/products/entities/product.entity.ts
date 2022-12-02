@@ -1,3 +1,4 @@
+import { Order } from 'src/orders/entities/order.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   BaseEntity,
@@ -8,6 +9,8 @@ import {
   DeleteDateColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { ProductStatus } from './product-status.enum';
 
@@ -29,10 +32,15 @@ export class Product extends BaseEntity {
   status: ProductStatus;
 
   @ManyToOne((type) => User, (user) => user.products, { eager: false })
-  user: User;
+  @JoinColumn({ name: 'seller_id' })
+  seller: User;
+
+  @OneToMany((type) => Order, (order) => order.product, { eager: false })
+  @JoinColumn({ name: 'Order_id' })
+  orders: Order[];
 
   @Column()
-  userId: number;
+  seller_id: number;
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   public deletedAt?: Date;

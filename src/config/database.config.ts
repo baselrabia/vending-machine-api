@@ -3,6 +3,7 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -18,6 +19,10 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     };
+  },
+  dataSourceFactory: async (options) => {
+    const dataSource = await new DataSource(options).initialize();
+    return dataSource;
   },
 };
  

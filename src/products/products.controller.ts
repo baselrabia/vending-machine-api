@@ -9,6 +9,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  ValidationPipe,
+  Put,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -22,7 +24,10 @@ export class ProductsController {
 
   @Post()
   @UseGuards(AuthGuard(), SellerRoleGuard)
-  create(@Body() createProductDto: CreateProductDto, @GetUser() user: User) {
+  create(
+    @Body(ValidationPipe) createProductDto: CreateProductDto,
+    @GetUser() user: User,
+  ) {
     return this.productsService.create(createProductDto, user);
   }
 
@@ -36,19 +41,19 @@ export class ProductsController {
     return this.productsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @UseGuards(AuthGuard(), SellerRoleGuard)
   update(
     @Param('id') id: string,
-    @Body() updateProductDto: UpdateProductDto,
+    @Body(ValidationPipe) updateProductDto: UpdateProductDto,
     @GetUser() user: User,
   ) {
-    return this.productsService.update(+id, updateProductDto,user);
+    return this.productsService.update(+id, updateProductDto, user);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard(), SellerRoleGuard)
   remove(@Param('id') id: string, @GetUser() user: User) {
-    return this.productsService.remove(+id,user);
+    return this.productsService.remove(+id, user);
   }
 }

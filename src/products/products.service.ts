@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from 'src/users/entities/user.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -30,17 +34,33 @@ export class ProductsService {
     return item;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto, user: User) {
-    return `This action updates a #${id} product`;
+  async getProductById(id: number, user: User): Promise<Product> {
+    const item = await this.findOne(id);
+    if (item.seller_id !== user.id) {
+      throw new UnauthorizedException(
+        `Task with ID "${id}" not authorized to be modified`,
+      );
+    }
+    return item;
+  }
+
+
+  async update(id: number, updateProductDto: UpdateProductDto, user: User) {
+    const product = await this.getProductById(id, user);
+
+    await this.productsRepository.update(
+      {
+        id: id,
+        seller_id: user.id,
+      },
+      {
+        ...updateProductDto,
+      },
+    );
   }
 
   async remove(id: number, user: User) {
-    const item = await this.findOne(id);
-    if( item.userId !== user.id){
-      throw new UnauthorizedException(`Task with ID "${id}" not authorized to be deleted`);
-    }
-
+    const item = await this.getProductById(id, user);
     item.softRemove();
-
   }
 }

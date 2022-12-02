@@ -25,10 +25,10 @@ export class ProductsRepository extends Repository<Product> {
 
     const product = this.create();
     product.name = name;
-    product.amount = parseInt(amount);
-    product.price = parseFloat(price);
+    product.amount = amount;
+    product.price = price;
     product.status = ProductStatus.AVAILABLE;
-    product.user = user;
+    product.seller = user;
 
     try {
       await product.save();
@@ -42,7 +42,7 @@ export class ProductsRepository extends Repository<Product> {
       throw new InternalServerErrorException();
     }
 
-    delete product.user;
+    delete product.seller;
 
     return product;
   }
