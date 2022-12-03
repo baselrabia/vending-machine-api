@@ -31,7 +31,7 @@ export class AuthController {
   @Get('/get-user')
   @UseGuards(AuthGuard())
   getUser(@Req() req) {
-    console.log(req);
+    // console.log(req);
     
     return { msg: 'hello user', user: req.user };
   }
