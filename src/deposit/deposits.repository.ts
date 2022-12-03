@@ -4,11 +4,11 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { User } from 'src/users/entities/user.entity';
-import { UsersRepository } from 'src/users/users.repository';
+import { User } from '../users/entities/user.entity';
+import { UsersRepository } from '../users/users.repository';
 import { Deposit } from './entities/deposit.entity';
 import { DepositStatus } from './enums/deposit-status.enum';
- 
+
 @Injectable()
 export class DepositsRepository extends Repository<Deposit> {
   private logger = new Logger('DepositsRepository');

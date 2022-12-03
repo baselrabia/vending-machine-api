@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersRepository } from './orders.repository';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { Order } from './entities/order.entity';
  import { DataSource } from 'typeorm';
-import { DepositService } from 'src/deposit/deposit.service';
+import { DepositService } from '../deposit/deposit.service';
 
 @Injectable()
 export class OrdersService {

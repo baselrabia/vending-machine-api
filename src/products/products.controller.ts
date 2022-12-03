@@ -1,4 +1,4 @@
-import { SellerRoleGuard } from './../users/gurds/seller.gurad';
+import { SellerRoleGuard } from '../users/gurds/seller.gurad';
 import { AuthGuard } from '@nestjs/passport';
 import {
   Controller,
@@ -15,8 +15,8 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { GetUser } from 'src/users/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
+import { GetUser } from '../users/get-user.decorator';
+import { User } from '../users/entities/user.entity';
 
 @Controller('products')
 export class ProductsController {
