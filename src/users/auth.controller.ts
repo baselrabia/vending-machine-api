@@ -28,9 +28,9 @@ export class AuthController {
     return this.authService.signIn(authCredentialsDto);
   }
 
-  @Get('/test')
+  @Get('/get-user')
   @UseGuards(AuthGuard())
-  test(@Req() req) {
+  getUser(@Req() req) {
     console.log(req);
     
     return { msg: 'hello user', user: req.user };
